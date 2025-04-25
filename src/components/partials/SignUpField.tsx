@@ -1,109 +1,192 @@
+import { Formik } from "formik";
+import * as Yup from "yup";
 import facebook from "../../assets/facebook.png";
 import linkdln from "../../assets/linkdln.png";
 import instagram from "../../assets/instagram.png";
 import google from "../../assets/google.png";
+import { Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+
+import { register } from "../../auth/AuthSlice";
 
 const SignUpField = () => {
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNo: 0,
+    password: "",
+    confirmPassword: "",
+    agreeTerms: false,
+  };
+
+  const dispatch = useAppDispatch();
+
+  const {token , loading, error} = useAppSelector((s)=>s.auth)
+
+  if(token) return <Navigate to="/admin" replace/>
+
+
+  const validationSchema = Yup.object({
+    firstName: Yup.string().required("First name is required"),
+    lastName: Yup.string().required("Last name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phoneNo: Yup.string()
+      .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+      .required("Phone number is required"),
+    password: Yup.string().min(6, "Minimum 6 characters").required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm your password"),
+    agreeTerms: Yup.boolean().oneOf([true], "You must accept the terms"),
+  });
+
+  const handleSubmit = (values: typeof initialValues) => {
+    console.log("Form Submitted: ", values);
+    dispatch(register(values)) 
+  };
+
   return (
-    <div className="w-full  flex-col flex items-center justify-center">
-      <div className="max-w-[450px] flex items-center gap-2 mt-6">
-        <div className="flex flex-col  ">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            First Name
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="FirstName"
-            type="name"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            Last Name
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="LastName"
-            type="name"
-          />
-        </div>
-      </div>
-      <div className="max-w-[450px] flex items-center gap-2 mt-6">
-        <div className="flex flex-col  ">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            Email
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="email"
-            type="email"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            Phone No
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="PhoneNo"
-            type="PhoneNo"
-          />
-        </div>
-      </div>
-      <div className="max-w-[450px] flex items-center gap-2 mt-6">
-        <div className="flex flex-col  ">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            password
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="password"
-            type="password"
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="block text-left font-lighter text-zinc-400 mb-2">
-            Confirm Password
-          </label>
-          <input
-            className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
-            name="ConfirmPassword"
-            type="password"
-          />
-        </div>
-      </div>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+        <form onSubmit={handleSubmit} className="w-full flex-col flex items-center justify-center">
+          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+            <div className="flex flex-col  w-full">
+              <label className="text-left text-zinc-400 mb-2">First Name</label>
+              <input
+                name="firstName"
+                type="text"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.firstName}
+              />
+              {touched.firstName && errors.firstName && (
+                <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
+              )}
+            </div>
 
-      
-      <div className="min-w-[450px] flex items-center justify-center  mt-2">
-        
-          <input type="checkbox" />
-          <label className="ml-1 text-zinc-400  text-md" htmlFor="remember">
-            {" "}
-            I agree with the terms of use ?
-          </label>
-        
-        
-      </div>
-      <button className="bg-[#3A57E8] px-[24px] py-[8px] h-[44px] w-[188px] rounded text-white mt-8 font-large">
-        Sign Up
-      </button>
-      <p className="text-[#232D42] tracking-wider text-[16px] mt-4 ">
-        or sign in with other accounts?
-      </p>
+            <div className="flex flex-col w-full">
+              <label className="text-left text-zinc-400 mb-2">Last Name</label>
+              <input
+                name="lastName"
+                type="text"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.lastName}
+              />
+              {touched.lastName && errors.lastName && (
+                <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
+              )}
+            </div>
+          </div>
 
-      <div className="flex gap-2 mt-4 items-center">
-        <img className="h-[40px] w-[40px]" src={google} alt="h" />
-        <img className="h-[40px] w-[40px]" src={facebook} alt="d" />
-        <img className="h-[40px] w-[40px]" src={instagram} alt="i" />
-        <img className="h-[40px] w-[40px]" src={linkdln} alt="f" />
-      </div>
-      <p className="mt-2 text-[#232D42] text-[16px] tracking-wider">
-        Already have an Account?{" "}
-        <span className="text-[#3A57E8] tracking-wider">
-          sign In.
-        </span>
-      </p>
-    </div>
+          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+            <div className="flex flex-col w-full">
+              <label className="text-left text-zinc-400 mb-2">Email</label>
+              <input
+                name="email"
+                type="email"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+              />
+              {touched.email && errors.email && (
+                <div className="text-red-500 text-sm">{errors.email}</div>
+              )}
+            </div>
+
+            <div className="flex flex-col w-full">
+              <label className="text-left text-zinc-400 mb-2">Phone No</label>
+              <input
+                name="phoneNo"
+                type="text"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.phoneNo}
+              />
+              {touched.phoneNo && errors.phoneNo && (
+                <div className="text-red-500 text-sm">{errors.phoneNo}</div>
+              )}
+            </div>
+          </div>
+
+          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+            <div className="flex flex-col w-full">
+              <label className="text-left text-zinc-400 mb-2">Password</label>
+              <input
+                name="password"
+                type="password"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {touched.password && errors.password && (
+                <div className="text-red-500 text-sm">{errors.password}</div>
+              )}
+            </div>
+
+            <div className="flex flex-col w-full">
+              <label className="text-left text-zinc-400 mb-2">Confirm Password</label>
+              <input
+                name="confirmPassword"
+                type="password"
+                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.confirmPassword}
+              />
+              {touched.confirmPassword && errors.confirmPassword && (
+                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="min-w-[450px] flex items-center justify-center mt-4">
+            <input
+              type="checkbox"
+              name="agreeTerms"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              checked={values.agreeTerms}
+              id="agreeTerms"
+            />
+            <label htmlFor="agreeTerms" className="ml-2 text-zinc-400 text-md">
+              I agree with the terms of use
+            </label>
+          </div>
+          {touched.agreeTerms && errors.agreeTerms && (
+            <div className="text-red-500 text-sm mt-1">{errors.agreeTerms}</div>
+          )}
+
+          <button type="submit" className="bg-[#3A57E8] px-[24px] py-[8px] h-[44px] w-[188px] rounded text-white mt-8 font-large">
+            Sign Up
+          </button>
+
+          <p className="text-[#232D42] tracking-wider text-[16px] mt-4">
+            or sign in with other accounts?
+          </p>
+
+          <div className="flex gap-2 mt-4 items-center">
+            <img className="h-[40px] w-[40px]" src={google} alt="Google" />
+            <img className="h-[40px] w-[40px]" src={facebook} alt="Facebook" />
+            <img className="h-[40px] w-[40px]" src={instagram} alt="Instagram" />
+            <img className="h-[40px] w-[40px]" src={linkdln} alt="LinkedIn" />
+          </div>
+
+          <p className="mt-2 text-[#232D42] text-[16px] tracking-wider">
+            Already have an Account?{" "}
+            <span className="text-[#3A57E8] tracking-wider cursor-pointer">
+              Sign In
+            </span>
+          </p>
+        </form>
+      )}
+    </Formik>
   );
 };
 
