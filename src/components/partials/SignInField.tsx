@@ -11,17 +11,20 @@ import { Link, Navigate } from "react-router-dom";
 const SignInField = () => {
   const dispatch = useAppDispatch();
 
-  const {token , loading, error} = useAppSelector((s)=>s.auth)
+  const {token ,error} = useAppSelector((s)=>s.auth)
+  console.log(token,error);
 
   if(token) return <Navigate to="/admin" replace/>
+  
+  
 
   const initialValues = {
-    email: "",
-    password: ""
+    email:"",
+    password:""
   };
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Email is required'),
+   email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required("Password is required")
   });
 
@@ -37,10 +40,10 @@ const SignInField = () => {
     >
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <form onSubmit={handleSubmit} className="w-full flex-col flex items-center justify-center">
-          <div className="min-w-[450px] mt-6">
+          <div className="xl:min-w-[450px]  md:min-w-[300px] mt-6">
             <label className="block text-left font-lighter text-zinc-400 mb-2">Email</label>
             <input
-              className="w-full h-[44px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+              className="w-full  h-[44px] px-4 md:px-1 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
               name="email"
               type="email"
               onChange={handleChange}
@@ -50,9 +53,15 @@ const SignInField = () => {
             {touched.email && errors.email && (
               <div className="text-red-500 text-sm mt-1">{errors.email}</div>
             )}
+            
           </div>
 
-          <div className="min-w-[450px] mt-6">
+          <div className="text-red-500 text-sm mt-1">
+  {error && <p>{error}</p>}
+</div>
+
+
+          <div className="xl:min-w-[450px] md:min-w-[300px]   mt-6">
             <label className="block text-left font-lighter text-zinc-400 mb-2">Password</label>
             <input
               className="w-full h-[44px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
@@ -67,37 +76,37 @@ const SignInField = () => {
             )}
           </div>
 
-          <div className="min-w-[450px] flex items-center justify-between mt-2">
+          <div className="xl:min-w-[450px]  md:min-w-[300px]   flex items-center justify-between mt-2">
             <div>
               <input type="checkbox" id="remember" />
-              <label className="ml-1 text-zinc-400 text-md" htmlFor="remember">
+              <label className="ml-1 text-zinc-400 md:text-sm xl:text-md" htmlFor="remember">
                 Remember me?
               </label>
             </div>
-            <h5 className="text-[#0286F7] font-large text-lg cursor-pointer">
+            <h5 className="text-[#0286F7] font-large xl:text-md md:text-sm cursor-pointer">
               Forget password
             </h5>
           </div>
 
           <button
             type="submit"
-            className="bg-[#3A57E8] px-[24px] py-[8px] h-[44px] w-[188px] rounded text-white mt-8 font-large"
+            className="bg-[#3A57E8] xl:px-[24px] md:px-[15px] md:py-[5px] xl:py-[8px] h-[44px] w-[188px] md:h-[36px] md:w-[150px] rounded text-white mt-8 md:mt-6 font-large"
           >
             Sign In
           </button>
 
-          <p className="text-[#232D42] tracking-wider text-[16px] mt-4">
+          <p className="text-[#232D42] tracking-wider md:text-sm xl:text-[16px] mt-4">
             or sign in with other accounts?
           </p>
 
           <div className="flex gap-2 mt-4 items-center">
-            <img className="h-[40px] w-[40px]" src={google} alt="Google" />
-            <img className="h-[40px] w-[40px]" src={facebook} alt="Facebook" />
-            <img className="h-[40px] w-[40px]" src={instagram} alt="Instagram" />
-            <img className="h-[40px] w-[40px]" src={linkdln} alt="LinkedIn" />
+            <img className="xl:h-[50px] xl:w-[50px] md:h-[30px] md:w-[30px]" src={google} alt="Google" />
+            <img className="xl:h-[50px] xl:w-[50px] md:h-[30px] md:w-[30px]" src={facebook} alt="Facebook" />
+            <img className="xl:h-[50px] xl:w-[50px] md:h-[30px] md:w-[30px]" src={instagram} alt="Instagram" />
+            <img className="xl:h-[50px] xl:w-[50px] md:h-[30px] md:w-[30px]" src={linkdln} alt="LinkedIn" />
           </div>
 
-          <p className="mt-2 text-[#232D42] text-[16px] tracking-wider">
+          <p className="xl:mt-2 text-[#232D42] md:text-sm xl:text-[16px] tracking-wider">
             Don’t have an account?{" "}
             <Link to="/signup" className="text-[#3A57E8] tracking-wider cursor-pointer">
               Click here to sign up.

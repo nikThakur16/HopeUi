@@ -5,6 +5,7 @@ import Layout2 from './components/Layout2'
 import { ProtectedRoute } from './components/ProtectedRoute'
 
 import Profile from './components/Profile'
+import NotFound from './components/NotFound'
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
               <Profile/>
               
             </ProtectedRoute>}/>
+            <Route path='*' element={<NotFound/>}/>
             
         </Routes>
     </div>

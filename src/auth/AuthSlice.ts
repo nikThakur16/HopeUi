@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 export const initialState: AuthState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem("token") ,
   user: null,
   loading: false,
   error: null,
@@ -20,10 +20,12 @@ export const login = createAsyncThunk(
   async (creds: SignInCred, thunkAPI) => {
     try {
       const response = await LoginApi(creds);
-      localStorage.setItem("token", response.token);
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+      }
       return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Login failed");
+      return thunkAPI.rejectWithValue(error?.message ?? "Login failed");
     }
   }
 );
@@ -33,10 +35,12 @@ export const register = createAsyncThunk(
   async (creds: SignUpCred, thunkAPI) => {
     try {
       const response = await SignUpApi(creds);
-      localStorage.setItem("token", response.token);
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+      }
       return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue( "Registration failed");
+      return thunkAPI.rejectWithValue("Registration failed");
     }
   }
 );
@@ -65,6 +69,7 @@ const AuthSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+        console.error("Login Error:", action.payload); 
       })
 
       .addCase(register.pending, (state) => {
@@ -83,5 +88,4 @@ const AuthSlice = createSlice({
 });
 
 export const { logout } = AuthSlice.actions;
-
 export default AuthSlice.reducer;

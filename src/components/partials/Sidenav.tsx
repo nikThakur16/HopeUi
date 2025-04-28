@@ -2,7 +2,7 @@ import logo from "../../assets/image copy.png"
 
 const Sidenav = () => {
   return (
-    <div className="h-full relative lg:w-[20%] xl:w-[15%] 2xl:w-[15%]">
+    <div className=" relative lg:w-[20%] xl:w-[15%] 2xl:w-[15%]">
       <i class=" absolute top-[15px]  lg:text-sm px-1 xl:px-1 xl:text-xl text-zinc-200 font-semibold rounded-full right-[-5%] border-none bg-[#0048B2] ri-arrow-left-line"></i>
       <div className="flex lg:text-xl xl:text-2xl shadow-lg font-medium gap-2 items-center  justify-center xl:px-2 lg:px-1 py-4"><img className="lg:h-[20px] lg:w-[20px] h-[30px] w-[30px]" src={logo} alt="" />Hope Ui</div>
    <div className="2xl:px-10 lg:px-4 mt-8">

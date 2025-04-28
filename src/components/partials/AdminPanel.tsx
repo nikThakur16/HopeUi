@@ -12,12 +12,18 @@ import staged from "../../assets/Gallery/staged.png";
 
 import sphare from "../../assets/Gallery/sphare.png";
 import bluering from "../../assets/Gallery/bluering.png";
+import About from "./About";
+import Stories from "./Stories";
+import Suggestions from "./Suggestions";
 
 const AdminPanel = () => {
-const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Robert Fox"}]
+  const colleagesData = [
+    { image: bluering, name: "Paul Molive" },
+    { image: sphare, name: "Robert Fox" },
+  ];
 
   return (
-    <div className=" bg-[#e9ecef] xl:w-[85%] lg:w-[80%]">
+    <div className=" bg-[#e9ecef]  xl:w-[85%] lg:w-[80%]">
       <div className="flex w-full bg-[#ffffff] justify-between py-2 px-12 ">
         <div className="relative">
           <input
@@ -84,10 +90,10 @@ const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Ro
       Main Content */}
 
       <div
-        className=" w-full bg-[#e9ecef] flex gap-4 h-full py-4 px-5
+        className=" w-full  bg-[#e9ecef]  flex gap-4  py-4 px-5
        "
       >
-        <div className="w-[25%] bg-white rounded-lg flex flex-col gap-4 ">
+        <div className="w-[25%] h-full  flex flex-col gap-4 ">
           <Card title="News" data="">
             <News />
           </Card>
@@ -98,7 +104,84 @@ const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Ro
             <Feeds title="Figma Community" username="@figma69" />
           </Card>
         </div>
-        <div className="w-[50%] p-4 bg-white rounded-lg">
+        <div className="w-[50%]   h-full rounded-lg">
+         <div className="bg-white p-6 rounded-lg mb-10">
+         <div className="flex items-center p-4 justify-between">
+            <div className="flex gap-3 ">
+              <img
+                className="h-[50px] w-[50px] p-1 border border-[#0048B2] rounded-full"
+                src={cube}
+                alt="cube"
+              />
+              <div>
+                <h1 className="font-normal ">Wade Warren</h1>
+                <p className="text-sm text-[#0048B2] font-medium ">
+                  {" "}
+                  colleages
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-400">29mins</p>
+          </div>
+          <img className="h-[35vh] w-full" src={staged} alt="" />
+          <div className="flex items-center justify-between p-4">
+            <div className="w-[30%] flex justify-between">
+              <i class="  text-gray-400 text-xl ri-heart-line"></i>
+              <p className="text-md text-gray-400">Likes</p>
+              <i class="  text-gray-400 text-xl ri-chat-2-line"></i>
+              <p className="text-md text-gray-400">140</p>
+            </div>
+            <p className="text-[#0048B2] ">
+              <i class="text-xl ri-share-line mr-2"></i> 99 share
+            </p>
+          </div>
+          <hr className="text-gray-300 my-4" />
+          <p className="text-sm text-gray-400 my-2 mx-6 ">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit
+            quod sapiente aut facilis repellendus temporibus corporis, aperiam
+            sunt ducimus eum? Lorem ipsum dolor sit amet consectetur,
+            adipisicing elit. Cumque, laudantium?
+          </p>
+          <hr className="text-gray-300 my-4" />
+          <div className="flex flex-col gap-6 px-5 py-2">
+            {colleagesData.map((user, index) => (
+              <div key={index} className="flex gap-4">
+                <img
+                  className="h-[40px] border border-gray-500 rounded-full w-[40px]"
+                  src={user.image}
+                  alt={`photo ${index + 1}`}
+                />
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-medium">{user.name}</span>
+                  <p className="text-sm text-gray-400">
+                    Lorem ipsum dolor sit amet consectetur.
+                  </p>
+                  <div className="flex gap-3">
+                    <i class="ri-heart-line text-gray-500 text-sm"></i>
+                    <span className="text-[#0048B2] text-sm">like</span>
+                    <i class="ri-reply-line text-[#0048B2] text-sm"></i>
+                    <span className="text-[#0048B2] text-sm">Reply</span>
+                    <span className="text-[#0048B2] text-sm">translation</span>
+                    <span className="text-gray-400 text-sm ">5min</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="relative w-full">
+              <input
+                className=" border w-full h-12 text-sm rounded-lg border-gray-300 p-4 text-gray-400"
+                type="search"
+                placeholder="Lovely!"
+              />
+              <i class="ri-camera-line absolute left-[95%] top-1/2 text-lg text-gray-400  transform -translate-x-1/2 -translate-y-1/2"></i>
+              <i class="ri-user-smile-line text-lg text-gray-400 absolute left-[91%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+            </div>
+         </div>
+        
+          </div>
+
+          <div className="bg-white p-4  rounded-lg">
+          <div >
           <div className="flex items-center p-4 justify-between">
             <div className="flex gap-3 ">
               <img
@@ -116,8 +199,15 @@ const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Ro
             </div>
             <p className="text-sm text-gray-400">29mins</p>
           </div>
-          <img className="h-[50vh]" src={staged} alt="" />
-          <div className="flex items-center justify-between p-4">
+          <p className="text-sm text-gray-400 my-2 mx-6 ">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit
+            quod sapiente aut facilis repellendus temporibus corporis, aperiam
+            sunt ducimus eum? Lorem ipsum dolor sit amet consectetur,
+            adipisicing elit. Cumque, laudantium?
+          </p>
+          <hr className="text-gray-300 my-3" />
+
+          <div className="flex items-center justify-between px-4">
             <div className="w-[30%] flex justify-between">
               <i class="  text-gray-400 text-xl ri-heart-line"></i>
               <p className="text-md text-gray-400">Likes</p>
@@ -128,33 +218,39 @@ const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Ro
               <i class="text-xl ri-share-line mr-2"></i> 99 share
             </p>
           </div>
-          <hr className="text-gray-300 my-4" />
-          <p className="text-sm text-gray-400 my-2 mx-6 ">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit quod sapiente aut facilis repellendus temporibus corporis, aperiam sunt ducimus eum? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque, laudantium?</p>
-          <hr className="text-gray-300 my-4" />
-          <div className="flex flex-col gap-6 px-5 py-2">
-            {colleagesData.map((user,index)=>(
-              <div key={index} className="flex gap-4">
-                <img className="h-[40px] border border-gray-500 rounded-full w-[40px]" src={user.image} alt={`photo ${index+1}`} />
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium">{user.name}</span>
-                  <p className="text-sm text-gray-400">Lorem ipsum dolor sit amet consectetur.</p>
-                  <div className="flex gap-3">
-                  <i class="ri-heart-line text-gray-500 text-sm"></i>
-                  <span className="text-[#0048B2] text-sm">like</span>
-                  <i class="ri-reply-line text-[#0048B2] text-sm"></i>
-                  <span className="text-[#0048B2] text-sm">Reply</span>
-                  <span className="text-[#0048B2] text-sm">translation</span>
-                  <span className="text-gray-400 text-sm ">5min</span>
-                  </div>
-                </div>
+         
+          <div className="relative w-full mt-4">
+              <input
+                className=" border w-full h-12 text-sm rounded-lg border-gray-300 p-4 text-gray-400"
+                type="search"
+                placeholder="Lovely!"
+              />
+              <i class="ri-camera-line absolute left-[95%] top-1/2 text-lg text-gray-400  transform -translate-x-1/2 -translate-y-1/2"></i>
+              <i class="ri-user-smile-line text-lg text-gray-400 absolute left-[91%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+            </div>
 
-              </div>
-            ))}
+          </div>
           </div>
 
+        
         </div>
 
-        <div className="w-[25%] bg-red-500"></div>
+       
+
+        {/* yuuigih */}
+
+        <div className="w-[25%] flex flex-col gap-4 ">
+          <Card title="About">
+            <About/>
+          </Card>
+          <Card title="stories">
+            <Stories/>
+
+          </Card>
+          <Card title="Suggestions">
+            <Suggestions/>
+          </Card>
+        </div>
       </div>
     </div>
   );

@@ -27,10 +27,10 @@ const Gallary = () => {
         <div className="grid grid-cols-3 gap-4 mt-4">
             {images.map((image, index) => (
             <div key={index} className=" group">
-                <img
+                <img 
                 src={image}
                 alt={`Gallery Image ${index + 1}`}
-                className="w-full h-auto rounded-lg transition-transform duration-300 transform group-hover:scale-105"
+                className="w-[84px] h-[84px] rounded-lg transition-transform duration-300 transform group-hover:scale-105"
                 />
             </div>
             ))}

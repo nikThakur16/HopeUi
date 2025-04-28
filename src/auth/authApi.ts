@@ -1,4 +1,4 @@
-import axios from "axios"
+
 
 export interface SignInCred{
     email:string,
@@ -16,29 +16,41 @@ export interface SignUpCred{
     
 }
 
-export async function LoginApi(creds:SignInCred) {
+export async function LoginApi(creds: SignInCred) {
+  console.log("Login Request Data:", creds);
+  const res = await fetch('https://reqres.in/api/register', {
+    method: 'POST',
+    headers: {'x-api-key': 'reqres-free-v1' ,'Content-Type': 'application/json'},
+    body: JSON.stringify(creds),
+  });
 
-    const res =await fetch('https://reqres.in/api/login',{
-        method:'POST',
-        headers:{'Content-Type': 'application/json'},
-        body:JSON.stringify(creds)
-    });
+  const data = await res.json(); 
+  console.log(data)
+ 
+  
 
-    if(!res) throw new Error("invalid");
-    return res.json();
-    
+  if (!res.ok) {
+    throw new Error(data.error || "Login failed");
+  }
+
+  return data; 
 }
-export async function SignUpApi(creds: any) {
+
+export async function SignUpApi(creds: SignUpCred) {
     const res = await fetch('https://reqres.in/api/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'x-api-key': 'reqres-free-v1','Content-Type': 'application/json'},
       body: JSON.stringify({
-        email: creds.email,
-        password: creds.password,
-      }),
+        email:creds.email,
+        password:creds.password
+
+      }
+       
+      ),
     });
   
     const data = await res.json();
+    console.log(data);
   
     if (!res.ok) {
       throw new Error(data.error || 'Registration failed');
