@@ -7,12 +7,12 @@ import SignInField from "./partials/SignInField";
 
 const Layout = () => {
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-full h-full overflow-x-hidden">
 
-      <div className="relative w-full">
+      <div className="relative h-full w-full">
         <img src={bgImg} alt="" />
-        <div className="absolute w-full top-[25%] right-[13%] flex items-center justify-center flex-col ">
-          <div className=" flex gap-2">
+        <div className="absolute h-full w-full top-[25%] right-[13%] flex items-center justify-center flex-col ">
+          <div className=" flex h-full gap-2">
             <img className="h-[40px] w-[40px]" src={logo} alt="" />
             <h1 className="text-4xl">Hope UI</h1>
           </div>

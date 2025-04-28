@@ -8,7 +8,8 @@ import Profile from './components/Profile'
 
 const AppRoutes = () => {
   return (
-    <div>
+    <div className='w-full h-full '>
+
         <Routes>
             <Route path='/' element={<Layout/>}/>
             <Route path='/signup' element={<Layout2/>}/>

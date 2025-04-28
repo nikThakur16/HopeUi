@@ -2,8 +2,8 @@ import image from "../../assets/image.png"
 
 const ImageBg = () => {
   return (
-    <div className=' object-cover'>
-        <img className="h-screen w-screen object-cover" src={image} alt="img" />
+    <div className='w-full min-h-screen object-cover '>
+        <img className="min-h-screen w-full  object-cover " src={image} alt="img" />
 
     </div>
   )

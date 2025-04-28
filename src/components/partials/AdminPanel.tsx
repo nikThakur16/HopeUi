@@ -3,10 +3,21 @@ import message from "../../assets/message.png";
 import notification from "../../assets/notification.png";
 import avatar from "../../assets/avatar.png";
 import bg from "../../assets/image.png";
+import Card from "../Card";
+import News from "./News";
+import Gallary from "./Gallary";
+import Feeds from "./Feeds";
+import cube from "../../assets/Gallery/CubeP.png";
+import staged from "../../assets/Gallery/staged.png";
+
+import sphare from "../../assets/Gallery/sphare.png";
+import bluering from "../../assets/Gallery/bluering.png";
 
 const AdminPanel = () => {
+const colleagesData=[{image:bluering ,name:"Paul Molive"},{image:sphare,name:"Robert Fox"}]
+
   return (
-    <div className="min-h-screen bg-[#e9ecef] w-[85%]">
+    <div className=" bg-[#e9ecef] xl:w-[85%] lg:w-[80%]">
       <div className="flex w-full bg-[#ffffff] justify-between py-2 px-12 ">
         <div className="relative">
           <input
@@ -46,21 +57,104 @@ const AdminPanel = () => {
       <div className="h-[124px] relative bg-[#ffffff] mt-[-2%] mx-10  flex z-50">
         <div className="w-[7%] relative">
           {" "}
-          <img className="absolute ml-8 top-[-30%]" src={avatar} alt="" /> 
+          <img className="absolute ml-8 top-[-30%]" src={avatar} alt="" />
         </div>
         <div className="flex w-[93%] px-8 justify-between items-center">
-        <div className="flex justify-between items-center gap-4"  >
-        <h1 className="text-2xl ">Austin Robertson</h1>
-        <p className="text-sm text-zinc-400">web Designer</p>
+          <div className="flex justify-between items-center gap-4">
+            <h1 className="text-2xl ">Austin Robertson</h1>
+            <p className="text-sm text-zinc-400">web Designer</p>
+          </div>
+          <ul className="flex items-center gap-6">
+            <li className="text-white bg-[#0048B2] px-3 py-2 rounded-full text-sm font-normal tracking-wider ">
+              Feed
+            </li>
+            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+              Activity
+            </li>
+            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+              Friends
+            </li>
+            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+              Profile{" "}
+            </li>
+          </ul>
         </div>
-        <ul className="flex items-center gap-6">
-            <li className="text-white bg-[#0048B2] px-3 py-2 rounded-full text-sm font-normal tracking-wider ">Feed</li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">Activity</li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">Friends</li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">Profile </li>
-        </ul>
-      
+      </div>
+      {/* 
+      Main Content */}
+
+      <div
+        className=" w-full bg-[#e9ecef] flex gap-4 h-full py-4 px-5
+       "
+      >
+        <div className="w-[25%] bg-white rounded-lg flex flex-col gap-4 ">
+          <Card title="News" data="">
+            <News />
+          </Card>
+          <Card title="title 2" data="132 pics">
+            <Gallary />
+          </Card>
+          <Card title="title 3">
+            <Feeds title="Figma Community" username="@figma69" />
+          </Card>
         </div>
+        <div className="w-[50%] p-4 bg-white rounded-lg">
+          <div className="flex items-center p-4 justify-between">
+            <div className="flex gap-3 ">
+              <img
+                className="h-[50px] w-[50px] p-1 border border-[#0048B2] rounded-full"
+                src={cube}
+                alt="cube"
+              />
+              <div>
+                <h1 className="font-normal ">Wade Warren</h1>
+                <p className="text-sm text-[#0048B2] font-medium ">
+                  {" "}
+                  colleages
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-400">29mins</p>
+          </div>
+          <img className="h-[50vh]" src={staged} alt="" />
+          <div className="flex items-center justify-between p-4">
+            <div className="w-[30%] flex justify-between">
+              <i class="  text-gray-400 text-xl ri-heart-line"></i>
+              <p className="text-md text-gray-400">Likes</p>
+              <i class="  text-gray-400 text-xl ri-chat-2-line"></i>
+              <p className="text-md text-gray-400">140</p>
+            </div>
+            <p className="text-[#0048B2] ">
+              <i class="text-xl ri-share-line mr-2"></i> 99 share
+            </p>
+          </div>
+          <hr className="text-gray-300 my-4" />
+          <p className="text-sm text-gray-400 my-2 mx-6 ">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit quod sapiente aut facilis repellendus temporibus corporis, aperiam sunt ducimus eum? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cumque, laudantium?</p>
+          <hr className="text-gray-300 my-4" />
+          <div className="flex flex-col gap-6 px-5 py-2">
+            {colleagesData.map((user,index)=>(
+              <div key={index} className="flex gap-4">
+                <img className="h-[40px] border border-gray-500 rounded-full w-[40px]" src={user.image} alt={`photo ${index+1}`} />
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-medium">{user.name}</span>
+                  <p className="text-sm text-gray-400">Lorem ipsum dolor sit amet consectetur.</p>
+                  <div className="flex gap-3">
+                  <i class="ri-heart-line text-gray-500 text-sm"></i>
+                  <span className="text-[#0048B2] text-sm">like</span>
+                  <i class="ri-reply-line text-[#0048B2] text-sm"></i>
+                  <span className="text-[#0048B2] text-sm">Reply</span>
+                  <span className="text-[#0048B2] text-sm">translation</span>
+                  <span className="text-gray-400 text-sm ">5min</span>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
+
+        <div className="w-[25%] bg-red-500"></div>
       </div>
     </div>
   );
