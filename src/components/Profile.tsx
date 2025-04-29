@@ -6,9 +6,9 @@ import Sidenav from './partials/Sidenav'
 
 const Profile = () => {
   // Remove token on page refresh or reload
-window.onbeforeunload = () => {
-  localStorage.removeItem("token");
-};
+// window.onbeforeunload = () => {
+//   localStorage.removeItem("token");
+// };
 
   
   

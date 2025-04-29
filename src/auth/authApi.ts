@@ -16,6 +16,20 @@ export interface SignUpCred{
     
 }
 
+// authApi.ts
+export async function fetchUsers(token: string) {
+  const res = await fetch('https://reqres.in/api/users/2', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      "x-api-key": "reqres-free-v1" // Include token in the request headers
+    }
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch users bro!');
+  return res.json(); // it will have { data: [...] }
+}
+
 export async function LoginApi(creds: SignInCred) {
   console.log("Login Request Data:", creds);
   const res = await fetch('https://reqres.in/api/register', {

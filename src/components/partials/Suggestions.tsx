@@ -20,11 +20,11 @@ const Suggestions = () => {
     { image: android, title: "Guy Hawkins" },
     { image: wordpress, title: "Floyd Milies" },
   ];
-  return <div className="flex flex-col gap-8">
+  return <div className="flex flex-col gap-2 xl:gap-4 ">
 
     {suggestionData.map((data,index)=>(
-        <div className="flex items-center justify-between">
-            <div className="flex gap-6">
+        <div key={index} className="flex items-center justify-between">
+            <div className="flex gap-2 xl:gap-6 items-center">
                 <img className="h-[56px] w-[56px] rounded-full border border-gray-400" src={data.image} alt="" />
                 <div>
                     <p className="font-medium">{data.title}</p>

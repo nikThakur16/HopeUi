@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 export const initialState: AuthState = {
-  token: localStorage.getItem("token") ,
+  token: localStorage.getItem("token"),
   user: null,
   loading: false,
   error: null,
@@ -23,7 +23,8 @@ export const login = createAsyncThunk(
       if (response.token) {
         localStorage.setItem("token", response.token);
       }
-      return response;
+      // Store user data along with token
+      return { token: response.token, user: response.user };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error?.message ?? "Login failed");
     }
@@ -38,7 +39,7 @@ export const register = createAsyncThunk(
       if (response.token) {
         localStorage.setItem("token", response.token);
       }
-      return response;
+      return { token: response.token, user: response.user }; // Added user data
     } catch (error: any) {
       return thunkAPI.rejectWithValue("Registration failed");
     }
@@ -65,11 +66,12 @@ const AuthSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        state.user = action.payload.user; // Store user info
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
-        console.error("Login Error:", action.payload); 
+        console.error("Login Error:", action.payload);
       })
 
       .addCase(register.pending, (state) => {
@@ -79,6 +81,7 @@ const AuthSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        state.user = action.payload.user; // Store user info
       })
       .addCase(register.rejected, (state, action) => {
         state.loading = false;

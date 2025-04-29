@@ -15,8 +15,20 @@ import bluering from "../../assets/Gallery/bluering.png";
 import About from "./About";
 import Stories from "./Stories";
 import Suggestions from "./Suggestions";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useEffect } from "react";
+import { getUsers } from "../../auth/userListSlice";
 
 const AdminPanel = () => {
+
+  const dispatch = useAppDispatch();
+  const { users, loading, error } = useAppSelector((state) => state.user);
+  console.log(users);
+  
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
   const colleagesData = [
     { image: bluering, name: "Paul Molive" },
     { image: sphare, name: "Robert Fox" },
@@ -37,9 +49,9 @@ const AdminPanel = () => {
           <img className="h-[28x] w-[28px] " src={flag} alt="" />
           <img className="h-[20x] w-[20px] " src={notification} alt="" />
           <img className="h-[20x] w-[20px] " src={message} alt="" />
-          <img className="h-[33x] w-[33px] " src={avatar} alt="" />
+          <img className="h-[33x] w-[33px] rounded-full" src={users.avatar} alt="" />
           <div className="flex flex-col ">
-            <p className="text-sm text-zinc-700">Austin Robertson</p>
+            <p className="text-sm text-zinc-700">{users.first_name} {users.last_name}</p>
             <p className="text-sm text-zinc-400">Marketing Adminstrator</p>
           </div>
         </div>
@@ -63,11 +75,11 @@ const AdminPanel = () => {
       <div className="h-[124px] relative bg-[#ffffff] mt-[-2%] mx-10  flex z-50">
         <div className="w-[7%] relative">
           {" "}
-          <img className="absolute ml-8 top-[-30%]" src={avatar} alt="" />
+          <img className="absolute ml-8 top-[-30%] rounded-full" src={users.avatar} alt="" />
         </div>
         <div className="flex w-[93%] px-8 justify-between items-center">
           <div className="flex justify-between items-center gap-4">
-            <h1 className="text-2xl ">Austin Robertson</h1>
+            <h1 className="text-2xl ">{users.first_name} {users.last_name}</h1>
             <p className="text-sm text-zinc-400">web Designer</p>
           </div>
           <ul className="flex items-center gap-6">
@@ -241,7 +253,7 @@ const AdminPanel = () => {
 
         <div className="w-[25%] flex flex-col gap-4 ">
           <Card title="About">
-            <About/>
+            <About mail={users.email}/>
           </Card>
           <Card title="stories">
             <Stories/>

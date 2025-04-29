@@ -30,7 +30,7 @@ const Gallary = () => {
                 <img 
                 src={image}
                 alt={`Gallery Image ${index + 1}`}
-                className="w-[84px] h-[84px] rounded-lg transition-transform duration-300 transform group-hover:scale-105"
+                className="w-[80px] h-[80px] sm:w-[40px] l sm:h-[40px] md:h-[50px] md:w-[50px] rounded-lg transition-transform duration-300 transform group-hover:scale-105"
                 />
             </div>
             ))}

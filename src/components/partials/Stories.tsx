@@ -11,7 +11,7 @@ const Stories = () => {
     <div className='flex flex-col gap-8 my-4'>
         {storieData.map((storie,index)=>(
             <div key={index} className='flex gap-6 items-center'>
-                <img className='h-[90px] w-[90px] rounded-full border border-gray-400' src={storie.image} alt="" />
+                <img className='2xl:h-[90px] 2xl:w-[90px] lg:h-[50px] lg:w-[50px] rounded-full border border-gray-400' src={storie.image} alt="" />
                 <div>
                     <p className='font-medium text-lg mb-2'>{storie.title}</p>
                     <p className='text-gray-500'>1 hour ago</p>
