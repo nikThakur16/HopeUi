@@ -4,7 +4,7 @@ import facebook from "../../assets/facebook.png";
 import linkdln from "../../assets/linkdln.png";
 import instagram from "../../assets/instagram.png";
 import google from "../../assets/google.png";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import { register } from "../../auth/AuthSlice";
@@ -50,103 +50,103 @@ const SignUpField = () => {
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
         <form onSubmit={handleSubmit} className="w-full flex-col flex items-center justify-center">
-          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+          <div className="lg:min-w-[450px]  min-w-[300px] flex  gap-2 mt-6">
             <div className="flex flex-col  w-full">
-              <label className="text-left text-zinc-400 mb-2">First Name</label>
+              <label className="text-left md:text-md  text-[12px] text-zinc-400 mb-2">First Name</label>
               <input
                 name="firstName"
                 type="text"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.firstName}
               />
               {touched.firstName && errors.firstName && (
-                <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>
+                <p className="text-red-500 text-sm mt-2">{errors.firstName}</p>
               )}
             </div>
 
             <div className="flex flex-col w-full">
-              <label className="text-left text-zinc-400 mb-2">Last Name</label>
+              <label className="text-left text-zinc-400 md:text-md  text-[12px] mb-2">Last Name</label>
               <input
                 name="lastName"
                 type="text"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.lastName}
               />
               {touched.lastName && errors.lastName && (
-                <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>
+                <p className="text-red-500 text-sm mt-2">{errors.lastName}</p>
               )}
             </div>
           </div>
 
-          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+          <div className="lg:min-w-[450px]  min-w-[300px]  flex  gap-2 mt-6">
             <div className="flex flex-col w-full">
-              <label className="text-left text-zinc-400 mb-2">Email</label>
+              <label className="text-left md:text-md  text-[12px] text-zinc-400 mb-2">Email</label>
               <input
                 name="email"
                 type="email"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.email}
               />
               {touched.email && errors.email && (
-                <div className="text-red-500 text-sm">{errors.email}</div>
+                <div className="text-red-500 text-sm mt-2">{errors.email}</div>
               )}
             </div>
 
             <div className="flex flex-col w-full">
-              <label className="text-left text-zinc-400 mb-2">Phone No</label>
+              <label className="text-left text-zinc-400 md:text-md  text-[12px] mb-2">Phone No</label>
               <input
                 name="phoneNo"
                 type="text"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.phoneNo}
               />
               {touched.phoneNo && errors.phoneNo && (
-                <div className="text-red-500 text-sm">{errors.phoneNo}</div>
+                <div className="text-red-500 text-sm mt-2 ">{errors.phoneNo}</div>
               )}
             </div>
           </div>
 
-          <div className="max-w-[450px] flex items-center gap-2 mt-6">
+          <div className="lg:min-w-[450px]  min-w-[300px]  flex  gap-2 mt-6">
             <div className="flex flex-col w-full">
-              <label className="text-left text-zinc-400 mb-2">Password</label>
+              <label className="text-left text-zinc-400 md:text-md  text-[12px] mb-2">Password</label>
               <input
                 name="password"
                 type="password"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
               />
               {touched.password && errors.password && (
-                <div className="text-red-500 text-sm">{errors.password}</div>
+                <div className="text-red-500 text-sm mt-2">{errors.password}</div>
               )}
             </div>
 
             <div className="flex flex-col w-full">
-              <label className="text-left text-zinc-400 mb-2">Confirm Password</label>
+              <label className="text-left text-zinc-400 md:text-md  text-[12px] mb-2">Confirm Password</label>
               <input
                 name="confirmPassword"
                 type="password"
-                className="w-full h-[33px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
+                className="w-full md:h-[33px]  h-[28px] px-4 border border-[#3A57E8] rounded focus:outline-none focus:ring-2 focus:ring-[#50BCD9]"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.confirmPassword}
               />
               {touched.confirmPassword && errors.confirmPassword && (
-                <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                <p className="text-red-500 text-sm mt-2">{errors.confirmPassword}</p>
               )}
             </div>
           </div>
 
-          <div className="min-w-[450px] flex items-center justify-center mt-4">
+          <div className="lg:min-w-[450px]  min-w-[300px]  flex items-center justify-center mt-4 ">
             <input
               type="checkbox"
               name="agreeTerms"
@@ -155,34 +155,34 @@ const SignUpField = () => {
               checked={values.agreeTerms}
               id="agreeTerms"
             />
-            <label htmlFor="agreeTerms" className="ml-2 text-zinc-400 text-md">
+            <label htmlFor="agreeTerms" className="ml-2  text-zinc-400 md:text-md text-xs">
               I agree with the terms of use
             </label>
           </div>
           {touched.agreeTerms && errors.agreeTerms && (
-            <div className="text-red-500 text-sm mt-1">{errors.agreeTerms}</div>
+            <div className="text-red-500 text-sm mt-2">{errors.agreeTerms}</div>
           )}
 
-          <button type="submit" className="bg-[#3A57E8] px-[24px] py-[8px] h-[44px] w-[188px] rounded text-white mt-8 font-large">
+          <button type="submit" className="bg-[#3A57E8] md:px-[24px] px-[18px] py-[8px] h-[37px] w-[150px] md:h-[44px] md:w-[188px] rounded text-white mt-8 font-large">
             Sign Up
           </button>
 
-          <p className="text-[#232D42] tracking-wider text-[16px] mt-4">
+          <p className="text-[#232D42] tracking-wider text-[14px] md:text-[16px] mt-4 ">
             or sign in with other accounts?
           </p>
 
-          <div className="flex gap-2 mt-4 items-center">
+          <div className="flex gap-2 md:mt-4 mt-2 items-center">
             <img className="h-[40px] w-[40px]" src={google} alt="Google" />
             <img className="h-[40px] w-[40px]" src={facebook} alt="Facebook" />
             <img className="h-[40px] w-[40px]" src={instagram} alt="Instagram" />
             <img className="h-[40px] w-[40px]" src={linkdln} alt="LinkedIn" />
           </div>
 
-          <p className="mt-2 text-[#232D42] text-[16px] tracking-wider">
+          <p className="mt-2 text-[#232D42] text-[12px] md:text-[16px] tracking-wider">
             Already have an Account?{" "}
-            <span className="text-[#3A57E8] tracking-wider cursor-pointer">
-              Sign In
-            </span>
+            <Link to="/login" className="text-[#3A57E8] tracking-wider cursor-pointer">
+              Click here to sign up.
+            </Link>
           </p>
         </form>
       )}

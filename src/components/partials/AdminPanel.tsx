@@ -1,7 +1,5 @@
-import flag from "../../assets/flag.png";
-import message from "../../assets/message.png";
-import notification from "../../assets/notification.png";
-import avatar from "../../assets/avatar.png";
+
+
 import bg from "../../assets/image.png";
 import Card from "../Card";
 import News from "./News";
@@ -22,7 +20,7 @@ import { getUsers } from "../../auth/userListSlice";
 const AdminPanel = () => {
 
   const dispatch = useAppDispatch();
-  const { users, loading, error } = useAppSelector((state) => state.user);
+  const { users } = useAppSelector((state) => state.user);
   console.log(users);
   
 
@@ -35,64 +33,49 @@ const AdminPanel = () => {
   ];
 
   return (
-    <div className=" bg-[#e9ecef]  xl:w-[85%] lg:w-[80%]">
-      <div className="flex w-full bg-[#ffffff] justify-between py-2 px-12 ">
-        <div className="relative">
-          <input
-            className=" px-8 border border-gray-200 text-gray-400 h-[36px] w-[304px]"
-            type="search"
-            placeholder="search..."
-          />
-          <i class="ri-search-line absolute text-2xl text-gray-300 top-[4px] left-[4px]"></i>
-        </div>
-        <div className="flex items-center gap-4">
-          <img className="h-[28x] w-[28px] " src={flag} alt="" />
-          <img className="h-[20x] w-[20px] " src={notification} alt="" />
-          <img className="h-[20x] w-[20px] " src={message} alt="" />
-          <img className="h-[33x] w-[33px] rounded-full" src={users.avatar} alt="" />
-          <div className="flex flex-col ">
-            <p className="text-sm text-zinc-700">{users.first_name} {users.last_name}</p>
-            <p className="text-sm text-zinc-400">Marketing Adminstrator</p>
-          </div>
-        </div>
-      </div>
+    <div className=" bg-[#e9ecef]  overflow-x-hidden">
+      
 
       <div
-        className="h-[200px]  rounded-b-2xl w-full"
+        className="md:h-[140px] h-[100px] lg:h-[200px] rounded-b-2xl w-full"
         style={{ backgroundImage: `url(${bg})` }}
       >
-        <div className="  flex items-center justify-between  px-16 py-14 w-full bg-cover bg-center ">
-          <h1 className="text-white text-5xl font-medium tracking-tighter ">
+        <div className="  relative flex :items-center items-baseline justify-baseline md:justify-between  py-4 px-4  md:px-16 md:py-8 w-full bg-cover bg-center ">
+         <div className="w-full " >
+         <h1 className="text-[#ffffff] md:text-2xl text-md lg:text-4xl font-medium tracking-tighter ">
             {" "}
             Hello Devs !
           </h1>
-          <button className=" bg-[#3A57E8] py-[7px] text-gray-200 text-sm px-[20px] rounded">
+          <h4 className="text-white font-normal mt-2 text-[10px] md:text-sm lg:text-lg lg:tracking-wider">We are on a mission to help developers like you to build beautiful projects for free.</h4>
+         </div>
+          <button className=" absolute right-0 md:right-10 bg-[#3A57E8] inline-block md:py-[7px] py-0.5 text-start text-gray-200 text-[10px] md:text-sm px-2 md:px-[20px] rounded">
             {" "}
-            <i class="ri-mic-fill text-white mr-2"></i>Announcements{" "}
+            <i className="ri-mic-fill text-white mr-2"></i>Announcements{" "}
           </button>
         </div>
+  
       </div>
-      <div className="h-[124px] relative bg-[#ffffff] mt-[-2%] mx-10  flex z-50">
-        <div className="w-[7%] relative">
+      <div className="lg:h-[124px] md:h-[80px] h-[50px] relative bg-[#ffffff] mt-[-2%] md:mx-10 mx-2  flex z-50">
+        <div className="md:w-[7%] w-[10%]  relative">
           {" "}
-          <img className="absolute ml-8 top-[-30%] rounded-full" src={users.avatar} alt="" />
+          <img className="absolute md:ml-8 ml-2 top-[-25%] md::top-[-30%] rounded-full" src={users.avatar} alt="" />
         </div>
-        <div className="flex w-[93%] px-8 justify-between items-center">
-          <div className="flex justify-between items-center gap-4">
-            <h1 className="text-2xl ">{users.first_name} {users.last_name}</h1>
-            <p className="text-sm text-zinc-400">web Designer</p>
+        <div className="flex md:w-[93%] w-[90%] md:px-8 px-2 justify-between  items-center">
+          <div className="flex items-center md:gap-2 gap-1 lg:gap-4">
+            <h1 className="lg:text-2xl md:text-lg mt-1 text-[10px] ">{users.first_name} {users.last_name}</h1>
+            <p className="md:text-sm text-[8px] text-zinc-400">web Designer</p>
           </div>
-          <ul className="flex items-center gap-6">
-            <li className="text-white bg-[#0048B2] px-3 py-2 rounded-full text-sm font-normal tracking-wider ">
+          <ul className="flex items-center md:gap-6 gap-2">
+            <li className="text-white bg-[#0048B2] md:px-3 md:py-2 px-1 py-0.5 rounded-full md:text-sm text-[8px] font-normal tracking-wider ">
               Feed
             </li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+            <li className="text-[#3A57E8] text-[8px] md:text-sm font-normal tracking-wider ">
               Activity
             </li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+            <li className="text-[#3A57E8] text-[8px]  md:text-sm font-normal tracking-wider ">
               Friends
             </li>
-            <li className="text-[#3A57E8] text-sm font-normal tracking-wider ">
+            <li className="text-[#3A57E8] text-[8px]  md:text-sm font-normal tracking-wider ">
               Profile{" "}
             </li>
           </ul>
@@ -102,10 +85,10 @@ const AdminPanel = () => {
       Main Content */}
 
       <div
-        className=" w-full  bg-[#e9ecef]  flex gap-4  py-4 px-5
+        className=" w-full  bg-[#e9ecef] lg:flex lg:flex-row gap-4 flex flex-col py-4 px-5
        "
       >
-        <div className="w-[25%] h-full  flex flex-col gap-4 ">
+        <div className="lg:w-[25%] sm:w-full h-full  flex flex-col gap-4 ">
           <Card title="News" data="">
             <News />
           </Card>
@@ -116,7 +99,7 @@ const AdminPanel = () => {
             <Feeds title="Figma Community" username="@figma69" />
           </Card>
         </div>
-        <div className="w-[50%]   h-full rounded-lg">
+        <div className="lg:w-[50%] sm:w-full  h-full rounded-lg">
          <div className="bg-white p-6 rounded-lg mb-10">
          <div className="flex items-center p-4 justify-between">
             <div className="flex gap-3 ">
@@ -155,7 +138,7 @@ const AdminPanel = () => {
             adipisicing elit. Cumque, laudantium?
           </p>
           <hr className="text-gray-300 my-4" />
-          <div className="flex flex-col gap-6 px-5 py-2">
+          <div className="flex flex-col md:gap-6 md:px-5 px-1 gap-2 py-2">
             {colleagesData.map((user, index) => (
               <div key={index} className="flex gap-4">
                 <img
@@ -168,13 +151,13 @@ const AdminPanel = () => {
                   <p className="text-sm text-gray-400">
                     Lorem ipsum dolor sit amet consectetur.
                   </p>
-                  <div className="flex gap-3">
-                    <i class="ri-heart-line text-gray-500 text-sm"></i>
-                    <span className="text-[#0048B2] text-sm">like</span>
-                    <i class="ri-reply-line text-[#0048B2] text-sm"></i>
-                    <span className="text-[#0048B2] text-sm">Reply</span>
-                    <span className="text-[#0048B2] text-sm">translation</span>
-                    <span className="text-gray-400 text-sm ">5min</span>
+                  <div className="flex md:gap-3 gap-2">
+                    <i class="ri-heart-line text-gray-500 md:text-sm text-[10px]"></i>
+                    <span className="text-[#0048B2] md:text-sm text-[10px]">like</span>
+                    <i class="ri-reply-line text-[#0048B2] md:text-sm text-[10px]"></i>
+                    <span className="text-[#0048B2] md:text-sm text-[10px]">Reply</span>
+                    <span className="text-[#0048B2] md:text-sm text-[10px]">translation</span>
+                    <span className="text-gray-400 md:text-sm text-[10px] ">5min</span>
                   </div>
                 </div>
               </div>
@@ -186,7 +169,7 @@ const AdminPanel = () => {
                 placeholder="Lovely!"
               />
               <i class="ri-camera-line absolute left-[95%] top-1/2 text-lg text-gray-400  transform -translate-x-1/2 -translate-y-1/2"></i>
-              <i class="ri-user-smile-line text-lg text-gray-400 absolute left-[91%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+              <i class="ri-user-smile-line text-lg text-gray-400 absolute md:left-[91%] left-[86%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
             </div>
          </div>
         
@@ -238,7 +221,7 @@ const AdminPanel = () => {
                 placeholder="Lovely!"
               />
               <i class="ri-camera-line absolute left-[95%] top-1/2 text-lg text-gray-400  transform -translate-x-1/2 -translate-y-1/2"></i>
-              <i class="ri-user-smile-line text-lg text-gray-400 absolute left-[91%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
+              <i class="ri-user-smile-line text-lg text-gray-400 absolute  md:left-[91%] left-[86%] top-1/2 transform -translate-x-1/2 -translate-y-1/2"></i>
             </div>
 
           </div>
@@ -251,7 +234,7 @@ const AdminPanel = () => {
 
         {/* yuuigih */}
 
-        <div className="w-[25%] flex flex-col gap-4 ">
+        <div className="lg:w-[25%] sm:w-full flex flex-col gap-4 ">
           <Card title="About">
             <About mail={users.email}/>
           </Card>
