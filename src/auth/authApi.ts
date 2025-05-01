@@ -2,7 +2,8 @@
 
 export interface SignInCred{
     email:string,
-    password:string
+    password:string,
+
 }
 
 export interface SignUpCred{
@@ -17,8 +18,8 @@ export interface SignUpCred{
 }
 
 // authApi.ts
-export async function fetchUsers(token: string) {
-  const res = await fetch('https://reqres.in/api/users/2', {
+export async function fetchUsers(token: string,id:string) {
+  const res = await fetch(`https://reqres.in/api/users/${id}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -47,7 +48,7 @@ export async function LoginApi(creds: SignInCred) {
     throw new Error(data.error || "Login failed");
   }
 
-  return data; // contains { token: "..." }
+  return data; // contains { token: "..." ,id.....}
 }
 
 export async function SignUpApi(creds: SignUpCred) {

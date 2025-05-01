@@ -6,6 +6,7 @@ interface AuthState {
   user: object | null; // Store user data here
   loading: boolean;
   error: string | null;
+  id:any
 }
 
 export const initialState: AuthState = {
@@ -13,6 +14,7 @@ export const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  id:localStorage.getItem("id"),
 };
 
 export const login = createAsyncThunk(
@@ -20,8 +22,11 @@ export const login = createAsyncThunk(
   async (creds: SignInCred, thunkAPI) => {
     try {
       const response = await LoginApi(creds);
+      console.log(response);
+      
       if (response.token) {
         localStorage.setItem("token", response.token);
+        localStorage.setItem("id", "5");
       }
       // Store user data along with token
       return { token: response.token, user: response.user };

@@ -24,10 +24,11 @@ const initialState: UserListState = {
 
 export const getUsers = createAsyncThunk('users/getUsers', async (_, thunkAPI) => {
   const token = localStorage.getItem("token");
+  const id=localStorage.getItem("id")
   if (!token) {
     return thunkAPI.rejectWithValue("No token found.");
   }
-  const response = await fetchUsers(token); 
+  const response = await fetchUsers(token,id); 
   return response.data as User[];
 });
 
