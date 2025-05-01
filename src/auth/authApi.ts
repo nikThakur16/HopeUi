@@ -22,32 +22,32 @@ export async function fetchUsers(token: string) {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
-      "x-api-key": "reqres-free-v1" // Include token in the request headers
+      "x-api-key": "reqres-free-v1" 
     }
   });
 
   if (!res.ok) throw new Error('Failed to fetch users bro!');
-  return res.json(); // it will have { data: [...] }
+  return res.json(); 
 }
-
 export async function LoginApi(creds: SignInCred) {
   console.log("Login Request Data:", creds);
-  const res = await fetch('https://reqres.in/api/register', {
+  const res = await fetch('https://reqres.in/api/login', {
     method: 'POST',
-    headers: {'x-api-key': 'reqres-free-v1' ,'Content-Type': 'application/json'},
+    headers: {
+      'x-api-key': 'reqres-free-v1',
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(creds),
   });
 
-  const data = await res.json(); 
-  console.log(data)
- 
-  
+  const data = await res.json();
+  console.log(data);
 
   if (!res.ok) {
     throw new Error(data.error || "Login failed");
   }
 
-  return data; 
+  return data; // contains { token: "..." }
 }
 
 export async function SignUpApi(creds: SignUpCred) {

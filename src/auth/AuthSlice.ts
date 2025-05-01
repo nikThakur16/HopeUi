@@ -3,7 +3,7 @@ import { SignUpApi, LoginApi, SignInCred, SignUpCred } from "./authApi";
 
 interface AuthState {
   token: string | null;
-  user: any;
+  user: object | null; // Store user data here
   loading: boolean;
   error: string | null;
 }
