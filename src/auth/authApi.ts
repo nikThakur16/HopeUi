@@ -18,6 +18,8 @@ export interface SignUpCred{
 }
 
 // authApi.ts
+
+//Getting a single user
 export async function fetchUsers(token: string,id:string) {
   const res = await fetch(`https://reqres.in/api/users/${id}`, {
     method: 'GET',
@@ -27,9 +29,27 @@ export async function fetchUsers(token: string,id:string) {
     }
   });
 
-  if (!res.ok) throw new Error('Failed to fetch users bro!');
+  if (!res.ok) throw new Error('Failed to fetch users ');
   return res.json(); 
 }
+
+
+//Getting A list of users
+
+export async function fetchUsersList() {
+  const res = await fetch("https://reqres.in/api/users?page=2", {
+    method: 'GET',
+    headers: {
+      // 'Authorization': `Bearer ${token}`,
+      "x-api-key": "reqres-free-v1" 
+    }
+  });
+
+  if (!res.ok) throw new Error('Failed to fetch users Table');
+  return res.json(); 
+}
+
+
 export async function LoginApi(creds: SignInCred) {
   console.log("Login Request Data:", creds);
   const res = await fetch('https://reqres.in/api/login', {

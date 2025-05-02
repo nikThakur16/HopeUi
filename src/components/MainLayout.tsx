@@ -10,9 +10,9 @@ const MainLayout = () => {
     setUsersOpen(!usersOpen);
   };
 
-  window.addEventListener("beforeunload", () => {
-    localStorage.removeItem("token");
-  });
+  // window.addEventListener("beforeunload", () => {
+  //   localStorage.removeItem("token");
+  // });
   
 
   return (

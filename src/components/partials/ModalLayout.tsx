@@ -4,6 +4,7 @@ interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
+  
 }
 const ModalLayout: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
   if (!isOpen) return null;
@@ -16,7 +17,7 @@ const ModalLayout: React.FC<ModalProps> = ({ isOpen, onClose, children, title })
       />
       {/* Modal */}
       <div className="flex min-h-full items-center b justify-center p-4">
-        <div className="relative transform overflow-hidden rounded-lg bg-white shadow-xl h-[600px] w-[600px] transition-all ">
+        <div className="relative transform overflow-hidden rounded-lg bg-white shadow-xl  transition-all ">
           {/* Header */}
           {title && (
             <div className="bg-white px-4 py-3 border-b">
@@ -26,23 +27,9 @@ const ModalLayout: React.FC<ModalProps> = ({ isOpen, onClose, children, title })
           {/* Content */}
           <div className="bg-white px-4 py-5">
           <div className="space-y-4 ">
-          <p>{children}</p>
+          {children}
           {/* Example footer with actions */}
-          <div className="flex justify-between  gap-3 mt-4">
-            <button
-              onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={onClose
-              }
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
-            >
-              Save
-            </button>
-          </div>
+          
         </div>
 
           </div>

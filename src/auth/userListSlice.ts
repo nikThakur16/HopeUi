@@ -16,7 +16,7 @@ interface UserListState {
 }
 
 const initialState: UserListState = {
-  users: {},
+  users: [],
   loading: false,
   error: null,
 };
@@ -31,6 +31,9 @@ export const getUsers = createAsyncThunk('users/getUsers', async (_, thunkAPI) =
   const response = await fetchUsers(token,id); 
   return response.data as User[];
 });
+
+
+
 
 const userListSlice = createSlice({
   name: 'users',
@@ -50,7 +53,14 @@ const userListSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Something went wrong!";
       });
+      
   },
 });
 
+
+
+
+
 export default userListSlice.reducer;
+
+

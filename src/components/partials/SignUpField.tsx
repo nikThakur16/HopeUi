@@ -22,7 +22,7 @@ const SignUpField = () => {
 
   const dispatch = useAppDispatch();
 
-  const {token , loading, error} = useAppSelector((s)=>s.auth)
+  const {token } = useAppSelector((s)=>s.auth)
 
   if(token) return <Navigate to="/admin" replace/>
 
