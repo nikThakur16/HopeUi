@@ -9,73 +9,73 @@ import ModalLayout from "./ModalLayout";
 
 
 
-import { getUsersList, loadFromLocalStorage } from "../../auth/TableDataSlice";
+import { getUsersList, loadFromLocalStorage, deleteUser } from "../../auth/TableDataSlice";
 import AddUserForm from "./AddUserForm";
 import blender from "../../assets/Gallery/blender.png"
 import DeleteConfirm from "./DeleteConfirm";
 import EditUserForm from "./EditUserForm";
 
-const users = [
-  {
-    profile: cube,
-    name: "Anna Sthesia",
-    email: "annasthesia@gmail.com",
-    contact: "(760) 756 7568",
+// const users = [
+//   {
+//     profile: cube,
+//     name: "Anna Sthesia",
+//     email: "annasthesia@gmail.com",
+//     contact: "(760) 756 7568",
 
-    country: "USA",
-    status: "Active",
-    company: "Acme Corporation",
-    joinDate: "2019/12/01",
-  },
-  {
-    profile: ring,
-    name: "Brock Lee",
-    contact: "+62 5689 456 658",
-    email: "brocklee@gmail.com",
-    country: "Indonesia",
-    status: "Active",
-    company: "Soylent Corp",
-    joinDate: "2019/12/01",
-  },
-  {
-    profile: cube,
-    name: "Dan Druff",
-    contact: "+55 6523 456 856",
-    email: "dandruff@gmail.com",
-    country: "Brazil",
-    status: "Pending",
-    company: "Umbrella Corporation",
-    joinDate: "2019/12/01",
-  },
-  {
-    profile: ring,
-    name: "Hans Olo",
-    contact: "+91 2586 253 125",
-    email: "hansolo@gmail.com",
-    country: "India",
-    status: "Inactive",
-    company: "Vehement Capital",
-    joinDate: "2019/12/01",
-  },
-  {
-    profile: cube,
-    name: "Lynn Guini",
-    contact: "+27 2563 456 589",
-    email: "lynnguini@gmail.com",
-    country: "Africa",
-    status: "Active",
-    company: "Massive Dynamic",
-    joinDate: "2019/12/01",
-  },
-];
+//     country: "USA",
+//     status: "Active",
+//     company: "Acme Corporation",
+//     joinDate: "2019/12/01",
+//   },
+//   {
+//     profile: ring,
+//     name: "Brock Lee",
+//     contact: "+62 5689 456 658",
+//     email: "brocklee@gmail.com",
+//     country: "Indonesia",
+//     status: "Active",
+//     company: "Soylent Corp",
+//     joinDate: "2019/12/01",
+//   },
+//   {
+//     profile: cube,
+//     name: "Dan Druff",
+//     contact: "+55 6523 456 856",
+//     email: "dandruff@gmail.com",
+//     country: "Brazil",
+//     status: "Pending",
+//     company: "Umbrella Corporation",
+//     joinDate: "2019/12/01",
+//   },
+//   {
+//     profile: ring,
+//     name: "Hans Olo",
+//     contact: "+91 2586 253 125",
+//     email: "hansolo@gmail.com",
+//     country: "India",
+//     status: "Inactive",
+//     company: "Vehement Capital",
+//     joinDate: "2019/12/01",
+//   },
+//   {
+//     profile: cube,
+//     name: "Lynn Guini",
+//     contact: "+27 2563 456 589",
+//     email: "lynnguini@gmail.com",
+//     country: "Africa",
+//     status: "Active",
+//     company: "Massive Dynamic",
+//     joinDate: "2019/12/01",
+//   },
+// ];
 
-const statusStyles: Record<string, string> = {
-  Active: "bg-blue-600 text-white",
-  Pending: "bg-orange-500 text-white",
-  Inactive: "bg-red-600 text-white",
-  Hold: "bg-teal-600 text-white",
-  Complete: "bg-green-600 text-white",
-};
+// const statusStyles: Record<string, string> = {
+//   Active: "bg-blue-600 text-white",
+//   Pending: "bg-orange-500 text-white",
+//   Inactive: "bg-red-600 text-white",
+//   Hold: "bg-teal-600 text-white",
+//   Complete: "bg-green-600 text-white",
+// };
 
 export default function UserList() {
   // const[open,setOpen]=useState(false)
@@ -83,7 +83,7 @@ export default function UserList() {
   // const onClose=()=>{
   //   setOpen(false)
   // }
-  const table = useAppSelector((state) => state.table.TableData);
+  // const table = useAppSelector((state) => state.table.TableData);
 
   // console.log("tableData", table[9]);
 
@@ -107,9 +107,8 @@ const[data,setData]=useState(null)
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadFromLocalStorage()); // Load from localStorage first
-    dispatch(getUsersList()); 
-    // Optionally fetch from API
+    dispatch(loadFromLocalStorage()); // Load from localStorage when the component is mounted or when data is updated
+    dispatch(getUsersList());
   }, [dispatch]);
   
   const userData = JSON.parse(localStorage.getItem("userData") || "[]");
@@ -123,6 +122,8 @@ const[data,setData]=useState(null)
     setModalType(type);
     setId(value)
     setData(value)
+    console.log("value",value);
+    
   };
   console.log("sgdghdfgbfgb", modalType);
 
@@ -130,11 +131,21 @@ const[data,setData]=useState(null)
     setModalType(null);
    
   };
-  const handleDelete=()=>{
-    const filtereddata:any=userData.filter((item:any)=>item.id != id);
-   localStorage.setItem("userData",JSON.stringify(filtereddata))
-   setModalType(null);
- }
+
+  const handleDelete = () => {
+    // Filter out the deleted user from both state and localStorage
+    const filteredData = userData.filter((item: any) => item.id !== id);
+  
+    // Update localStorage with the new filtered data
+    localStorage.setItem("userData", JSON.stringify(filteredData));
+  
+    // Update state
+    dispatch(loadFromLocalStorage()); // Load the updated data after deletion
+  
+    // Close the modal
+    setModalType(null);
+  };
+  
  
   
 
@@ -165,6 +176,7 @@ const[data,setData]=useState(null)
           data-modal-target="crud-modal"
           data-modal-toggle="crud-modal"
           onClick={() => onClick("add")}
+          onClose={onClose}
           className="p-2 ml-[94%] ri-user-add-fill  bg-green-500 rounded text-white hover:bg-green-600 transition"
         ></i>
       </div>
@@ -232,6 +244,7 @@ const[data,setData]=useState(null)
                       data-modal-target="crud-modal"
                       data-modal-toggle="crud-modal"
                       onClick={() => onClick("edit",u)}
+                      id={u.id}
                       className="p-2 bg-orange-500 rounded text-white hover:bg-orange-600 transition"
                     >
                       <FaEdit />

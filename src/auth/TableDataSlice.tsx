@@ -30,15 +30,20 @@ export const getUsersList = createAsyncThunk(
       return thunkAPI.rejectWithValue("No token found.");
     }
 
+    // Always load the latest data from local storage
+    const existingData = JSON.parse(localStorage.getItem("userData") || "[]");
+    if (existingData.length > 0) {
+      return existingData; // Return existing data without fetching from API
+    }
+
+    // Fetch data from API if local storage is empty
     const response = await fetchUsersList();
 
-    const existing = JSON.parse(localStorage.getItem("userData") || "[]");
-    const combined = [...existing, ...response.data.filter((apiUser: TableData) =>
-      !existing.some((localUser: TableData) => localUser.id === apiUser.id)
-    )];
+    // Save fetched data to local storage
+    localStorage.setItem("userData", JSON.stringify(response.data));
+    localStorage.setItem("isDataFetched", "true"); // Set the flag
 
-    localStorage.setItem("userData", JSON.stringify(combined));
-    return combined;
+    return response.data;
   }
 );
 
@@ -47,8 +52,9 @@ const TableDataSlice = createSlice({
   initialState,
   reducers: {
     addUser(state, action) {
-      state.TableData.push(action.payload);
-      localStorage.setItem("userData", JSON.stringify(state.TableData));
+      state.TableData.push(action.payload); // Add the new user to the Redux state
+      localStorage.setItem("userData", JSON.stringify(state.TableData)); // Update local storage
+      localStorage.setItem("isDataFetched", "true"); // Ensure the flag remains set
     },
     editUser(state, action) {
       const index = state.TableData.findIndex((u) => u.id === action.payload.id);
@@ -57,10 +63,11 @@ const TableDataSlice = createSlice({
         localStorage.setItem("userData", JSON.stringify(state.TableData));
       }
     },
-    deleteUser(state, action) {
-      state.TableData = state.TableData.filter((u) => u.id !== action.payload);
-      localStorage.setItem("userData", JSON.stringify(state.TableData));
-    },
+    // deleteUser(state, action) {
+    //   const updatedData = state.TableData.filter((u) => u.id !== action.payload);
+    //   state.TableData = updatedData;
+    //   localStorage.setItem("userData", JSON.stringify(updatedData));
+    // },
     loadFromLocalStorage(state) {
       const users = localStorage.getItem("userData");
       if (users) {
