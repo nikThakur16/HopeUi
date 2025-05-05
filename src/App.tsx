@@ -1,6 +1,6 @@
 
-import './App.css'
-import AppRoutes from './AppRoutes'
+import './styles/App.css'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
   // window.addEventListener("beforeunload", () => {
