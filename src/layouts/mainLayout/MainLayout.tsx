@@ -12,6 +12,7 @@ const MainLayout = () => {
 
   window.addEventListener("beforeunload", () => {
     localStorage.removeItem("token");
+    
   });
   
 

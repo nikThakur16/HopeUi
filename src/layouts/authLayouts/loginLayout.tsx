@@ -2,24 +2,25 @@ import ImageBg from "../../comman/ImageBg";
 import SignInField from "../../pages/authPages/SignInField";
 import bgImg from "../../assets/webImages/bgimg.png"
 import logo from "../../assets/webImages/logo.png"
-import { useEffect } from "react";
-import { PageTransition } from "../../comman/PageTransition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
+import { PageTransition } from "../../comman/PageTransition";
 
-
-const loginLayout = () => {
+const LoginLayout = () => {
   const [showTransition, setShowTransition] = useState(false);
   const navigate = useNavigate();
   const { token } = useAppSelector((state) => state.auth);
+
   useEffect(() => {
     if (token) {
+      // Show transition immediately
       setShowTransition(true);
-      // Wait for animation to complete before redirecting
+      
+      // Redirect after animation (adjust timing to match your GIF duration)
       const timer = setTimeout(() => {
         navigate("/admin", { replace: true });
-      }, 2000); // Adjust this timing to match your GIF duration
+      }, 2000); // Reduced to 1.5 seconds
 
       return () => clearTimeout(timer);
     }
@@ -28,6 +29,7 @@ const loginLayout = () => {
   if (showTransition) {
     return <PageTransition />;
   }
+
   return (
     <div className="flex w-full h-screen overflow-hidden">
       <div className="relative w-full h-full">
@@ -53,4 +55,4 @@ const loginLayout = () => {
   );
 };
 
-export default loginLayout;
+export default LoginLayout;

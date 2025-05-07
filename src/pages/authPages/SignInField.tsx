@@ -18,7 +18,7 @@ const SignInField = () => {
   const { token, error } = useAppSelector((s) => s.auth);
   console.log(token, error);
 
-  if (token) return <Navigate to="/admin" replace />;
+  // if (token) return <Navigate to="/admin" replace />;
 
 
 
@@ -156,7 +156,7 @@ const SignInField = () => {
           </div>
 
           <p className="xl:mt-2 text-[#232D42] md:text-sm xl:text-[16px] text-xs tracking-wider">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <Link
               to="/signup"
               className="text-[#3A57E8] md:text-sm xl:text-[16px] text-xs tracking-wider cursor-pointer"

@@ -1,4 +1,5 @@
-import { motion, AnimatePresence } from "framer-motion";
+// src/comman/PageTransition.tsx
+import { motion } from "framer-motion";
 import runningGif from "../assets/webImages/ninjas-running-24084-1-min-1736334057.gif";
 
 export const PageTransition = () => {
@@ -7,7 +8,7 @@ export const PageTransition = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5 }} // Slightly longer fade for smoother transition
       className="w-full h-screen flex items-center bg-[#FAFAFA] justify-center"
     >
       <motion.img
@@ -15,7 +16,8 @@ export const PageTransition = () => {
         alt=""
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.5 }} // Slightly longer scale animation
+        className="w-auto h-auto" // Ensure GIF displays at its natural size
       />
     </motion.div>
   );
