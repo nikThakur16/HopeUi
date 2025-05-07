@@ -78,7 +78,7 @@ export async function SignUpApi(creds: SignUpCred) {
   console.log(data);
 
   if (!res.ok) {
-    throw new Error(data.error || "Registration failed");
+    throw new Error(data.error || "Registration faileddd");
   }
 
   return data;
