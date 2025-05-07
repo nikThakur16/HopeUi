@@ -25,9 +25,11 @@ const SignUpField = () => {
 
   const dispatch = useAppDispatch();
 
-  const {token } = useAppSelector((s)=>s.auth)
+  // const {token } = useAppSelector((s)=>s.auth)
 
-  if(token) return <Navigate to="/admin" replace/>
+  // if(token) return <Navigate to="/admin" replace/>
+  
+
 
 
   const validationSchema = Yup.object({
@@ -46,7 +48,7 @@ const SignUpField = () => {
 
   const handleSubmit = async (values: typeof initialValues) => {
     setLoading(true)
-    await new Promise (resolve => setTimeout(resolve, 3000))
+    await new Promise (resolve => setTimeout(resolve, 2000))
 
     dispatch(register(values));
     setLoading(false)

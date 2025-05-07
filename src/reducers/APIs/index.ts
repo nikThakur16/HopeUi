@@ -43,46 +43,30 @@ export async function LoginApi(creds: SignInCred) {
 
 //signUp
 
+// src/reducers/APIs/index.ts
 export async function SignUpApi(creds: SignUpCred) {
-  // First check if user exists
-  const checkUserRes = await fetch(`${BASE_URL}/users?page=1`, {
-    method: "GET",
-    headers: {
-      "x-api-key": "reqres-free-v1",
-    },
-  });
 
-  const usersData = await checkUserRes.json();
-  
-  // Check if email already exists
-  const emailExists = usersData.data.some((user: any) => user.email === creds.email);
-  
-  if (emailExists) {
-    throw new Error("Email already exists");
-  }
+    // If email doesn't exist, proceed with registration
+    const res = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: {
+        "x-api-key": "reqres-free-v1",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: creds.email,
+        password: creds.password,
+      }),
+    });
 
-  // If email doesn't exist, proceed with registration
-  const res = await fetch(`${BASE_URL}/register`, {
-    method: "POST",
-    headers: {
-      "x-api-key": "reqres-free-v1",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: creds.email,
-      password: creds.password,
-    }),
-  });
+    const data = await res.json();
 
-  const data = await res.json();
-  console.log(data);
+    if (!res.ok) {
+      throw new Error(data.error || "Registration failed");
+    }
 
-  if (!res.ok) {
-    throw new Error(data.error || "Registration faileddd");
-  }
-
-  return data;
-}
+    return data;
+  } 
 
 
 //Getting a single user

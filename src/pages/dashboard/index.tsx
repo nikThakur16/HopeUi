@@ -20,24 +20,36 @@ import DashboardSkeleton from "../../loaders/DashboardSkelton";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
   const { users } = useAppSelector((state) => state.user);
   console.log(users);
-  const [loading, setLoading] = useState(false);
+
+  
   useEffect(() => {
-    setLoading(true)
-    setTimeout(()=>{
-      dispatch(getUsers());
-      setLoading(false)
-    },6000)
+    const fetchData = async () => {
+      try {
+        setIsInitialLoading(true); // Set loading before any data fetch
+        await dispatch(getUsers());
+      } catch (error) {
+        console.error('Failed to fetch users:', error);
+      } finally {
+        // Add a minimum loading time for better UX
+        setTimeout(() => {
+          setIsInitialLoading(false);
+        }, 2000);
+      }
+    };
+
+    fetchData();
   }, [dispatch]);
+ 
+
+  if( isInitialLoading) return <DashboardSkeleton/> 
+
   const colleagesData = [
     { image: bluering, name: "Paul Molive" },
     { image: sphare, name: "Robert Fox" },
   ];
-
-  if(loading){
-    return <DashboardSkeleton/>
-  }
 
   return (
     <div className=" bg-[#e9ecef]  overflow-x-hidden">

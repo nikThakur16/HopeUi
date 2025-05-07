@@ -85,6 +85,7 @@ export default function UserList() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+
     setLoading(true);
     setTimeout(() => {
       dispatch(loadFromLocalStorage());
