@@ -13,12 +13,14 @@ interface TableDataState {
   TableData: TableData[];
   loading: boolean;
   error: string | null;
+  isAdding: boolean; // New state for add operation
 }
 
 const initialState: TableDataState = {
   TableData: [],
   loading: false,
   error: null,
+  isAdding: false,
 };
 
 // Async thunk to fetch users
@@ -61,6 +63,30 @@ export const getUsersList = createAsyncThunk(
 //   }
 // );
 
+// Async thunk to add user with delay
+export const addUserWithDelay = createAsyncThunk(
+  "Table/addUser",
+  async (userData: TableData, thunkAPI) => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Get existing users
+    const existingUsers = JSON.parse(localStorage.getItem("userData") || "[]");
+    
+    // Check for duplicate email
+    const emailExists = existingUsers.some((user: TableData) => user.email === userData.email);
+    if (emailExists) {
+      throw new Error("Email already exists");
+    }
+    
+    // Add new user
+    const updatedUsers = [...existingUsers, userData];
+    localStorage.setItem("userData", JSON.stringify(updatedUsers));
+    
+    return userData;
+  }
+);
+
 const TableDataSlice = createSlice({
   name: "TableData",
   initialState,
@@ -72,6 +98,7 @@ const TableDataSlice = createSlice({
       if (emailExists) {
         throw new Error("Email already exists");
       }
+      
 
       state.TableData.push(action.payload); // Add the new user to the Redux state
       localStorage.setItem("userData", JSON.stringify(state.TableData)); // Update local storage
@@ -111,6 +138,18 @@ const TableDataSlice = createSlice({
       .addCase(getUsersList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong!";
+      })
+      .addCase(addUserWithDelay.pending, (state) => {
+        state.isAdding = true;
+        state.error = null;
+      })
+      .addCase(addUserWithDelay.fulfilled, (state, action) => {
+        state.isAdding = false;
+        state.TableData.push(action.payload);
+      })
+      .addCase(addUserWithDelay.rejected, (state, action) => {
+        state.isAdding = false;
+        state.error = action.error.message || "Failed to add user";
       });
   },
 });

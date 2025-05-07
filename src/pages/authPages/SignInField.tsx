@@ -2,13 +2,14 @@ import facebook from "../../assets/webImages/facebook.png";
 import linkdln from "../../assets/webImages/linkdln.png";
 import instagram from "../../assets/webImages/instagram.png";
 import google from "../../assets/webImages/google.png";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import * as Yup from "yup";
 
 import { Formik } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { login } from "../../reducers/auth/AuthSlice";
 import { useState } from "react";
+
 
 const SignInField = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +19,8 @@ const SignInField = () => {
   console.log(token, error);
 
   if (token) return <Navigate to="/admin" replace />;
+
+
 
   const initialValues = {
     email: "",
@@ -29,12 +32,17 @@ const SignInField = () => {
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = async (values: typeof initialValues) => {
-    setLoading(true)
-    await new Promise (resolve => setTimeout(resolve, 3000))
 
-    dispatch(login(values));
-    setLoading(false)
+  const handleSubmit = async (values: typeof initialValues) => {
+    setLoading(true);
+    try {
+      await dispatch(login(values));
+      // Don't redirect here - let the parent handle it
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -56,7 +64,7 @@ const SignInField = () => {
           className="w-full flex-col flex items-center justify-center"
         >
           <div className="xl:min-w-[450px] md:min-w-[300px]  min-w-[270px]   min mt-6">
-            <label className="block text-left font-lighter text-zinc-400 mb-2">
+            <label className="block  text-left font-lighter text-zinc-400 mb-2">
               Email
             </label>
             <input

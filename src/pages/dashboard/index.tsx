@@ -11,23 +11,33 @@ import bluering from "../../assets/Gallery/bluering.png";
 import About from "../../layouts/cardLayout/components/About";
 import Stories from "../../layouts/cardLayout/components/Stories";
 import { Suggestions } from "../../layouts/cardLayout/components/Suggestions";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useEffect, useState } from "react";
 import { getUsers } from "../../reducers/user";
 import Card from "../../layouts/cardLayout/Card";
+import DashboardSkeleton from "../../loaders/DashboardSkelton";
+
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
   const { users } = useAppSelector((state) => state.user);
   console.log(users);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-    dispatch(getUsers());
+    setLoading(true)
+    setTimeout(()=>{
+      dispatch(getUsers());
+      setLoading(false)
+    },6000)
   }, [dispatch]);
   const colleagesData = [
     { image: bluering, name: "Paul Molive" },
     { image: sphare, name: "Robert Fox" },
   ];
+
+  if(loading){
+    return <DashboardSkeleton/>
+  }
 
   return (
     <div className=" bg-[#e9ecef]  overflow-x-hidden">

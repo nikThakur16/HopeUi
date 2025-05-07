@@ -1,8 +1,6 @@
-// src/components/UserList.tsx
-
 import { FaRegUser, FaEdit, FaTrash } from "react-icons/fa";
 import bg from "../../assets/webImages/image.png";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../store/hooks";
 
 import {
   getUsersList,
@@ -14,6 +12,9 @@ import DeleteConfirm from "../../layouts/modalLayout/components/DeleteConfirm";
 import EditUserForm from "../../layouts/modalLayout/components/EditUserForm";
 import { useEffect, useState } from "react";
 import ModalLayout from "../../layouts/modalLayout";
+import UserListSkeleton from "../../loaders/UserListSkelton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 // const users = [
 //   {
@@ -80,12 +81,19 @@ import ModalLayout from "../../layouts/modalLayout";
 export default function UserList() {
   const [id, setId] = useState(null);
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);  
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadFromLocalStorage());
-    dispatch(getUsersList());
+    setLoading(true);
+    setTimeout(() => {
+      dispatch(loadFromLocalStorage());
+      dispatch(getUsersList());
+      setLoading(false);
+    }, 3000);
   }, [dispatch]);
+  const query = useSelector((state: RootState) => state.search.query);
+  console.log("Search Query:", query); // This should now show the actual string value
 
   const userData = JSON.parse(localStorage.getItem("userData") || "[]");
 
@@ -102,12 +110,25 @@ export default function UserList() {
     setModalType(null);
   };
 
+   // Filter users based on search query
+   const filteredUsers = userData.filter((user: any) => {
+    const searchLower = query.toLowerCase();
+    
+    return (
+      `${user.first_name} ${user.last_name}`
+        .toLowerCase()
+        .includes(searchLower) || user.email.toLowerCase().includes(searchLower)
+    );
+  });
   const handleDelete = () => {
     const filteredData = userData.filter((item: any) => item.id !== id);
     localStorage.setItem("userData", JSON.stringify(filteredData));
     dispatch(loadFromLocalStorage());
     setModalType(null);
   };
+  if(loading){
+    return <UserListSkeleton/>
+  }
 
   return (
     <div className="w-full min-h-screen bg-gray-50">
@@ -132,90 +153,93 @@ export default function UserList() {
         </div>
         <button
           onClick={() => onClick("add", null)}
-          className="absolute bottom-4 right-4 md:right-8 p-2 bg-green-500 rounded-full text-white hover:bg-green-600 transition"
+          className="absolute bottom-14 right-4 md:right-16 px-2 py-1 bg-green-500 rounded-full  text-white hover:bg-green-600 transition"
         >
           <i className="ri-user-add-fill text-lg"></i>
         </button>
       </div>
 
       {/* Table Section */}
-      <div className="p-4 md:px-8 mt-4">
-        <div className="w-full overflow-x-auto bg-white rounded-lg shadow-lg">
-          <div className="min-w-[800px] md:min-w-full">
-            <table className="w-full table-auto border-collapse">
-              <thead className="bg-[#F2F2F2] sticky top-0">
-                <tr>
-                  <th className="px-2 py-2 w-20">Profile</th>
-                  <th className="px-4 py-2 w-40">Name</th>
-                  <th className="px-4 py-2 w-40">Contact</th>
-                  <th className="px-4 py-2 w-40">Email</th>
-                  <th className="px-4 py-2 w-32">Country</th>
-                  <th className="px-4 py-2 w-24">Status</th>
-                  <th className="px-4 py-2 w-40">Company</th>
-                  <th className="px-4 py-2 w-32">Join Date</th>
-                  <th className="px-4 py-2 w-36">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {userData.map((u: any, i: any) => (
-                  <tr
-                    key={i}
-                    className={i % 2 !== 0 ? "bg-[#F2F2F2]" : "bg-white"}
-                  >
-                    <td className="px-4 py-2">
-                      <img
-                        src={u.avatar || blender}
-                        alt=""
-                        className="w-8 h-8 rounded-full object-cover mx-auto"
-                      />
-                    </td>
-                    <td className="px-4 py-2 text-gray-700 text-center">
-                      {u.first_name} {u.last_name}
-                    </td>
-                    <td className="px-4 py-2 text-gray-700 text-center">
-                      +62 5689 456 658
-                    </td>
-                    <td className="px-4 py-2 text-gray-600 text-center">
-                      {u.email}
-                    </td>
-                    <td className="px-4 py-2 text-gray-600 text-center">USA</td>
-                    <td className="px-4 py-2">
-                      <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-600 text-white">
-                        Active
-                      </span>
-                    </td>
-                    <td className="px-4 py-2 text-gray-600 text-center">
-                      SOFTRADIX
-                    </td>
-                    <td className="px-4 py-2 text-gray-600 text-center">
-                      1-May-2025
-                    </td>
-                    <td className="px-4 py-2">
-                      <div className="flex items-center justify-center space-x-2">
-                        <button className="p-2 bg-green-500 rounded text-white hover:bg-green-600 transition">
-                          <FaRegUser />
-                        </button>
-                        <button
-                          onClick={() => onClick("edit", u)}
-                          className="p-2 bg-orange-500 rounded text-white hover:bg-orange-600 transition"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          onClick={() => onClick("delete", u)}
-                          className="p-2 bg-red-500 rounded text-white hover:bg-red-600 transition"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <div className="p-4 md:px-8 -mt-14">
+     
+ 
+      <div className="w-full overflow-x-auto bg-white rounded-lg shadow-lg">
+      <div className="min-w-[800px] md:min-w-full">
+        <table className="w-full table-auto border-collapse">
+          <thead className="bg-[#F2F2F2] sticky top-0">
+            <tr>
+              <th className="px-2 py-2 w-20">Profile</th>
+              <th className="px-4 py-2 w-40">Name</th>
+              <th className="px-4 py-2 w-40">Contact</th>
+              <th className="px-4 py-2 w-40">Email</th>
+              <th className="px-4 py-2 w-32">Country</th>
+              <th className="px-4 py-2 w-24">Status</th>
+              <th className="px-4 py-2 w-40">Company</th>
+              <th className="px-4 py-2 w-32">Join Date</th>
+              <th className="px-4 py-2 w-36">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredUsers.map((u: any, i: any) => (
+              <tr
+                key={i}
+                className={i % 2 !== 0 ? "bg-[#F2F2F2]" : "bg-white"}
+              >
+                <td className="px-4 py-2">
+                  <img
+                    src={u.avatar || blender}
+                    alt=""
+                    className="w-8 h-8 rounded-full object-cover mx-auto"
+                  />
+                </td>
+                <td className="px-4 py-2 text-gray-700 text-center">
+                  {u.first_name} {u.last_name}
+                </td>
+                <td className="px-4 py-2 text-gray-700 text-center">
+                  +62 5689 456 658
+                </td>
+                <td className="px-4 py-2 text-gray-600 text-center">
+                  {u.email}
+                </td>
+                <td className="px-4 py-2 text-gray-600 text-center">USA</td>
+                <td className="px-4 py-2">
+                  <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-600 text-white">
+                    Active
+                  </span>
+                </td>
+                <td className="px-4 py-2 text-gray-600 text-center">
+                  SOFTRADIX
+                </td>
+                <td className="px-4 py-2 text-gray-600 text-center">
+                  1-May-2025
+                </td>
+                <td className="px-4 py-2">
+                  <div className="flex items-center justify-center space-x-2">
+                    <button className="p-2 bg-green-500 rounded text-white hover:bg-green-600 transition">
+                      <FaRegUser />
+                    </button>
+                    <button
+                      onClick={() => onClick("edit", u)}
+                      className="p-2 bg-orange-500 rounded text-white hover:bg-orange-600 transition"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() => onClick("delete", u)}
+                      className="p-2 bg-red-500 rounded text-white hover:bg-red-600 transition"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+    </div>
+    </div>
+     
 
       <ModalLayout
         isOpen={!!modalType}

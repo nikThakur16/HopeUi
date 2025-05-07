@@ -5,7 +5,7 @@ import linkdln from "../../assets/webImages/linkdln.png";
 import instagram from "../../assets/webImages/instagram.png";
 import google from "../../assets/webImages/google.png";
 import { Link, Navigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { register } from "../../reducers/auth/AuthSlice";
 import { useState } from "react";
 

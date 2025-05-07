@@ -105,7 +105,7 @@ export async function fetchUsers(token: string, id: string) {
 //Getting A list of users
 
 export async function fetchUsersList() {
-  const res = await fetch(`${BASE_URL}/users?page=2`, {
+  const res = await fetch(`${BASE_URL}/users?page=5`, {
     method: "GET",
     headers: {
       // 'Authorization': `Bearer ${token}`,
